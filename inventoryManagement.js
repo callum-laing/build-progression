@@ -19,9 +19,9 @@ function getInventory() {
 }
 
 /**
- * Get's a product by name
- * @param {Product} name
- * @returns
+ * Gets a product by name
+ * @param {string} name
+ * @returns {Product}
  */
 function getProduct(name) {
   let product = inventory.find((p) => p.name == name);
@@ -37,6 +37,9 @@ function getProduct(name) {
  * @param {int} count
  */
 function addProduct(productName, count) {
+  if (!Number.isInteger(count)) {
+    throw new Error("count is not an integer");
+  }
   inventory.push({ name: productName, count });
 }
 
@@ -70,7 +73,9 @@ function removeProduct(productName) {
  */
 function modifyProductCount(productName, count) {
   let product = inventory.find((p) => p.name == productName);
-
+  if (!Number.isInteger(count)) {
+    throw new Error("count is not an integer");
+  }
   if (product == null || product == undefined) {
     throw new Error("Product does not exist");
   }

@@ -1,0 +1,16 @@
+{
+  "name": "buildprogression",
+  "version": "1.0.0",
+  "description": "Q1. Create the logic of an inventory management system, to list all products, to be able to add a product, update the amount, and ultimately remove it (only if the supply is at 0). Put this in a singular module/class A1. This is now complete under inventoryManagement.js",
+  "main": "app.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./app.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "prompt-sync": "^4.2.0"
+  }
+}
