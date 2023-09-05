@@ -20,12 +20,15 @@
 
         <section class="mainBodyWrapper">
             <div class="formWrapper">
-                <form>
-                    <label for="fname">Item: </label><br>
-                    <input type="text" id="fname" name="fname"><br>
-                    <label for="lname">Quantity: </label><br>
-                    <input type="text" id="lname" name="lname">
-                    <input type="submit" value="Submit">
+                <h1>Add a Product</h1>
+                <form id="productForm">
+                    <label for="productName">Product Name:</label>
+                    <input type="text" id="productName" required><br><br>
+
+                    <label for="quantity">Quantity:</label>
+                    <input type="number" id="quantity" required><br><br>
+
+                    <button type="submit">Add Product</button>
                 </form>
             </div>
         </section>

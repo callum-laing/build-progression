@@ -31,6 +31,9 @@ const addItem = (event) => {
 
   let productName = productNameInput.value;
   let newcount = parseInt(quantityInput.value);
+  // let productName = prompt("Enter the name of the product you want to add: ");
+  // let count = prompt("Enter the quantity: ");
+  // let newCount = parseInt(count);
 
   productNameInput.value = "";
   quantityInput.value = "";
