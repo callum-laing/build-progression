@@ -6,19 +6,22 @@ import {
   removeProduct,
 } from "./inventoryManagement.js";
 
-import promptSync from "prompt-sync";
-
-let prompt = promptSync();
-
 // let name = prompt("name? ");
 //Without touching a single line of code from step 1, implement this module in a console app that the user can interface with.
 
 //GET INVENTORY
-let showInventory = () => {
-  console.log("Product Name | Count");
-  console.log("-------------|------");
+const showInventory = () => {
+  const inventoryList = document.getElementById("inventoryList");
+
+  let inventoryListHtml = "<ul>";
   getInventory().forEach((p) => {
-    console.log(p.name + " ".repeat(13 - p.name.length) + "| " + p.count);
+    inventoryListHtml += `<li> ${p.name} ${p.count} <button data-name="${p.name}"class="removeItemBtn">Remove</button></li>`;
+  });
+  inventoryListHtml += "</ul>";
+  inventoryList.innerHTML = inventoryListHtml;
+
+  document.querySelectorAll(".removeItemBtn").forEach((btn) => {
+    btn.addEventListener("click", removeItem);
   });
 };
 
@@ -30,7 +33,7 @@ const addItem = (event) => {
   let quantityInput = document.getElementById("quantity");
 
   let productName = productNameInput.value;
-  let newcount = parseInt(quantityInput.value);
+  let newCount = parseInt(quantityInput.value);
 
   productNameInput.value = "";
   quantityInput.value = "";
@@ -38,7 +41,10 @@ const addItem = (event) => {
   console.log(`You added ${productName}, with a quantity of ${newCount}`);
 
   addProduct(productName, newCount);
+  showInventory();
+  return false;
 };
+document.getElementById("productForm").addEventListener("submit", addItem);
 
 //UPDATE INVENTORY
 let updateInventory = () => {
@@ -54,10 +60,8 @@ let updateInventory = () => {
 };
 
 //REMOVE ITEM
-let removeItem = () => {
-  let itemToRemove = prompt(
-    "Enter the name of the product you want to remove: "
-  );
+let removeItem = (e) => {
+  let itemToRemove = e.target.dataset.name;
 
   let item = getProduct(itemToRemove);
   console.log(item);
@@ -68,41 +72,5 @@ let removeItem = () => {
   removeProduct(itemToRemove);
 
   console.log(getInventory());
+  showInventory();
 };
-
-const intro = () => {
-  let whileLoop = true;
-  while (whileLoop) {
-    console.log(
-      "\n1. Get Inventory. \n2. Add Item. \n3. Update Inventory. \n4. Remove Item. \n5. Exit "
-    );
-    let userChoice = prompt("What would you like to do? ");
-    let choiceInt = parseInt(userChoice);
-    try {
-      if (choiceInt == 5) {
-        whileLoop = exit();
-      } else if (choiceInt == 1) {
-        showInventory();
-      } else if (choiceInt == 2) {
-        addItem();
-      } else if (choiceInt == 3) {
-        updateInventory();
-      } else if (choiceInt == 4) {
-        removeItem();
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  }
-};
-
-const exit = () => {
-  console.log("Bye!");
-  return false;
-};
-
-intro();
-// 1. View inventory
-// 2. Add inventory
-// 3. Update inventory
-// 4. Remove inventory
