@@ -15,13 +15,19 @@ const showInventory = () => {
 
   let inventoryListHtml = "<ul>";
   getInventory().forEach((p) => {
-    inventoryListHtml += `<li> ${p.name} ${p.count} <button data-name="${p.name}"class="removeItemBtn">Remove</button></li>`;
+    inventoryListHtml += `<li> ${p.name} ${p.count} <button data-name="${p.name}"class="removeItemBtn">Remove</button><button data-name="${p.name}" class="updateQuantityBtn">Edit</button></li>`;
   });
   inventoryListHtml += "</ul>";
   inventoryList.innerHTML = inventoryListHtml;
 
   document.querySelectorAll(".removeItemBtn").forEach((btn) => {
     btn.addEventListener("click", removeItem);
+  });
+
+  document.querySelectorAll(".updateQuantityBtn").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      editQuantity(btn.dataset.name);
+    });
   });
 };
 
@@ -46,18 +52,18 @@ const addItem = (event) => {
 };
 document.getElementById("productForm").addEventListener("submit", addItem);
 
-//UPDATE INVENTORY
-let updateInventory = () => {
-  let itemToUpdate = prompt(
-    "What product do you want to add more quantity to?: "
-  );
-  let amountToAdd = prompt("How many are you adding?: ");
-  let amountAsInt = parseInt(amountToAdd);
+// //UPDATE INVENTORY
+// let updateInventory = () => {
+//   let itemToUpdate = prompt(
+//     "What product do you want to add more quantity to?: "
+//   );
+//   let amountToAdd = prompt("How many are you adding?: ");
+//   let amountAsInt = parseInt(amountToAdd);
 
-  modifyProductCount(itemToUpdate, amountAsInt);
-  let updatedItem = getProduct(itemToUpdate);
-  console.log(updatedItem);
-};
+//   modifyProductCount(itemToUpdate, amountAsInt);
+//   let updatedItem = getProduct(itemToUpdate);
+//   console.log(updatedItem);
+// };
 
 //REMOVE ITEM
 let removeItem = (e) => {
@@ -73,4 +79,15 @@ let removeItem = (e) => {
 
   console.log(getInventory());
   showInventory();
+};
+
+const editQuantity = (productName) => {
+  const newQuantity = parseInt(prompt(`Enter new quantity for ${productName}`));
+
+  if (!isNaN(newQuantity)) {
+    modifyProductCount(productName, newQuantity);
+    showInventory();
+  } else {
+    alert("please enter a valid quantity.");
+  }
 };
